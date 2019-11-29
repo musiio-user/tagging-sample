@@ -2,7 +2,7 @@ import os
 import csv
 import json
 import argparse
-from constants import VALID_TAGS
+from constants import VALID_TAGS, KEY_MAPPING
 
 def getTagsInFolder(tags_path):
     """
@@ -75,6 +75,17 @@ def checkInstruments(tags_types):
             tags_types.insert(instrument_index, "INSTRUMENT")
             tags_types.insert(instrument_index + 1, "SCORE")
 
+def convertKeyTags(tag_name):
+    """
+    Converts Key tag name from Camelot scale to Chromatic
+    :param tag_name:
+    :return:
+    """
+
+    converted_key_tag = KEY_MAPPING[tag_name]
+
+    return converted_key_tag
+
 def checkTags(csv_writer, tags_path, file, tags_types, tags_list):
     """
     Opens a given json file, checks through the given tag types, and writes it to the CSV file
@@ -101,6 +112,9 @@ def checkTags(csv_writer, tags_path, file, tags_types, tags_list):
                 index = tags_types.index(type)
             except:
                 continue
+
+            if type == "KEY":
+                name = convertKeyTags(name)
 
             if type == "INSTRUMENT":
                 index = index + instrument
