@@ -113,7 +113,7 @@ def checkTags(csv_writer, tags_path, file, tags_types, tags_list):
             except:
                 continue
 
-            if type == "KEY":
+            if type == "KEY" or type == "KEY SECONDARY":
                 name = convertKeyTags(name)
 
             if type == "INSTRUMENT":
